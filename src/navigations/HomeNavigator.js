@@ -10,21 +10,16 @@ import Contacts from '../screens/Contacts';
 import ContactDetails from '../screens/ContacDetail';
 import CreateContact from '../screens/CreateContact';
 import Settings from '../screens/Settings';
+import {Text} from 'react-native';
 
 const HomeNavigator = () => {
   const HomeStack = createStackNavigator();
   return (
     <HomeStack.Navigator initialRouteName={CONTACT_LIST}>
-      <HomeStack.Screen
-        name={CONTACT_LIST}
-        component={Contacts}></HomeStack.Screen>
-      <HomeStack.Screen
-        name={CONTACT_DETAIL}
-        component={ContactDetails}></HomeStack.Screen>
-      <HomeStack.Screen
-        name={CREATE_CONTACT}
-        component={CreateContact}></HomeStack.Screen>
-      <HomeStack.Screen name={SETTINGS} component={Settings}></HomeStack.Screen>
+      <HomeStack.Screen name={CONTACT_LIST} component={Contacts} />
+      <HomeStack.Screen name={CONTACT_DETAIL} component={ContactDetails} />
+      <HomeStack.Screen name={CREATE_CONTACT} component={CreateContact} />
+      <HomeStack.Screen name={SETTINGS} component={Settings} />
     </HomeStack.Navigator>
   );
 };

@@ -1,30 +1,42 @@
-import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-import Container from '../../components/common/Container';
-import Input from '../../components/common/Input';
+import React, {useState, useContext} from 'react';
+import LoginComponent from '../../components/common/Login';
+import {GlobalContext} from '../../context/Provider';
+import loginUser from '../../context/actions/auth/loginUser';
+import {useRoute} from '@react-navigation/native';
 
 const SignIn = () => {
-  const [userName, onChangeUsername] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
+  const [form, setForm] = useState({});
+  const [justSignedUp, setJustSignedUp] = useState(false);
+  const {params} = useRoute();
+  React.useEffect(() => {
+    if (params?.data) {
+      setJustSignedUp(true);
+      setForm({...form, Username: params.data.username});
+    }
+  }, [params]);
 
+  const {
+    authDispatch,
+    authState: {error, loading},
+  } = useContext(GlobalContext);
+  const onSubmit = () => {
+    if (form.Username && form.Password) {
+      loginUser(form)(authDispatch);
+    }
+  };
+  const onChange = ({name, value}) => {
+    setJustSignedUp(false);
+    setForm({...form, [name]: value});
+  };
   return (
-    <Container>
-      <Text>Hi from SignIn</Text>
-      <Input
-        label="Username"
-        onChangeText={onChangeUsername}
-        value={userName}
-        error={userName === '' ? 'This field is required' : false}
-      />
-      <Input
-        label="Password"
-        onChangeText={onChangePassword}
-        value={password}
-        icon={<Text>HIDE</Text>}
-        iconPosition="right"
-        error={password === '' ? 'This field is required' : false}
-      />
-    </Container>
+    <LoginComponent
+      onSubmit={onSubmit}
+      onChange={onChange}
+      form={form}
+      error={error}
+      loading={loading}
+      justSignedUp={justSignedUp}
+    />
   );
 };
 
