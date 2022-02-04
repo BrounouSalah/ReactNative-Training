@@ -11,7 +11,7 @@ import Container from '../../components/common/Container';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Fontisto';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {SETTINGS} from '../../constants/routeNames';
+import {LOGIN, SETTINGS} from '../../constants/routeNames';
 import logoutUser from '../../context/actions/auth/logoutUser';
 const SideMenu = ({navigation, authDispatch}) => {
   const handleLogout = () => {

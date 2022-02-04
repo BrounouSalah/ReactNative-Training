@@ -1,12 +1,25 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {GlobalContext} from '../../context/Provider';
 import ContactsComponent from '../../components/common/ContactsComponent';
+import getContacts from '../../context/actions/contacts/getContacts';
 const Contacts = () => {
   const {setOptions, toggleDrawer} = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  React.useEffect(() => {
+  const {
+    contactsDispatch,
+    contactsState: {
+      getContacts: {data, loading, error},
+    },
+  } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getContacts()(contactsDispatch);
+  }, []);
+
+  useEffect(() => {
     setOptions({
       headerLeft: () => (
         <TouchableOpacity
@@ -22,6 +35,8 @@ const Contacts = () => {
     <ContactsComponent
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
+      loading={loading}
+      data={data}
     />
   );
 };
