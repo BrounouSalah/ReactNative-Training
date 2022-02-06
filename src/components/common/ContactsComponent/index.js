@@ -14,7 +14,7 @@ import colors from '../../../assets/theme/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {CREATE_CONTACT} from '../../../constants/routeNames';
+import {CONTACT_DETAIL, CREATE_CONTACT} from '../../../constants/routeNames';
 const ContactsComponent = ({sortBy, data, loading, setModalVisible}) => {
   const {navigate} = useNavigation();
   const ListEmptyComponent = () => (
@@ -26,7 +26,11 @@ const ContactsComponent = ({sortBy, data, loading, setModalVisible}) => {
     const {contact_picture, first_name, last_name, phone_number, country_code} =
       item;
     return (
-      <TouchableOpacity style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => {
+          navigate(CONTACT_DETAIL, {item});
+        }}>
         <View style={styles.item}>
           {contact_picture ? (
             <Image

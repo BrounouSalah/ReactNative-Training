@@ -26,7 +26,11 @@ const CreateContactComponent = ({
     <View style={styles.container}>
       <Container>
         <Image
-          source={{uri: localFile?.path || DEFAULT_IMAGE_URI}}
+          source={{
+            uri: localFile?.path
+              ? localFile.path
+              : localFile || DEFAULT_IMAGE_URI,
+          }}
           style={styles.imageView}
         />
         <TouchableOpacity onPress={openSheet}>
@@ -39,6 +43,7 @@ const CreateContactComponent = ({
           label="First name"
           placeholder="Enter First name"
           error={error?.first_name?.[0]}
+          value={form.firstName || ''}
         />
         <Input
           onChangeText={value => {
@@ -47,6 +52,7 @@ const CreateContactComponent = ({
           label="Last name"
           placeholder="Enter Last name"
           error={error?.last_name?.[0]}
+          value={form.lastName || ''}
         />
         <Input
           icon={
@@ -73,6 +79,7 @@ const CreateContactComponent = ({
           label="Phone number"
           placeholder="Enter Phone"
           error={error?.phone_number?.[0]}
+          value={form.phoneNumber || ''}
         />
         <View
           style={{

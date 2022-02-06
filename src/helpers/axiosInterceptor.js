@@ -6,7 +6,7 @@ import {LOGOUT} from '../constants/routeNames';
 
 let headers = {
   Authorization:
-    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IkhlbGxvIn0.oDPkItpWBwZfBiZW_0qcrwkUVejsqSeWyNSmgkq6YPk',
+    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3Q5OTk5In0.IXlqJmSnuu9Xe8LAbmWXMbApryc34QEMx-FfKyq7IOU',
 };
 const axiosInstance = axios.create({
   baseURL: envs.DEV_BACKEND_URL,
