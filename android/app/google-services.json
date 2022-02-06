@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672281108999",
+    "project_id": "myapp-51ba8",
+    "storage_bucket": "myapp-51ba8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672281108999:android:4ce31387da2b4240ec00a2",
+        "android_client_info": {
+          "package_name": "com.trainproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672281108999-uv03vhv9qbd6lhtlmmg0bmbvoi1mi8mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBov0yihNUFk8AJH7hPpMr5OlOODFDhWio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672281108999-uv03vhv9qbd6lhtlmmg0bmbvoi1mi8mk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

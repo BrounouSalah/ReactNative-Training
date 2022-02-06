@@ -1,4 +1,4 @@
-import {View, Text, Switch, Image} from 'react-native';
+import {View, Text, Switch, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import Container from '../Container/index';
@@ -7,6 +7,7 @@ import CustomButton from '../CustomButton';
 import CountryPicker from 'react-native-country-picker-modal';
 import {DEFAULT_IMAGE_URI} from '../../../constants/general';
 import colors from '../../../assets/theme/colors';
+import ImagePicker from '../ImagePicker';
 const CreateContactComponent = ({
   onChangeText,
   onSubmit,
@@ -15,12 +16,22 @@ const CreateContactComponent = ({
   error,
   loading,
   toggleValueChange,
+  sheetRef,
+  openSheet,
+  closeSheet,
+  onFileSelected,
+  localFile,
 }) => {
   return (
     <View style={styles.container}>
       <Container>
-        <Image source={{uri: DEFAULT_IMAGE_URI}} style={styles.imageView} />
-        <Text style={styles.chooseText}>Choose image</Text>
+        <Image
+          source={{uri: localFile?.path || DEFAULT_IMAGE_URI}}
+          style={styles.imageView}
+        />
+        <TouchableOpacity onPress={openSheet}>
+          <Text style={styles.chooseText}>Choose image</Text>
+        </TouchableOpacity>
         <Input
           onChangeText={value => {
             onChangeText({name: 'firstName', value});
@@ -87,6 +98,7 @@ const CreateContactComponent = ({
           title="Submit"
         />
       </Container>
+      <ImagePicker onFileSelected={onFileSelected} ref={sheetRef} />
     </View>
   );
 };

@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
-import AppModal from '../AppModal';
+
 import CustomButton from '../CustomButton/index';
 import Message from '../Message/index';
 import colors from '../../../assets/theme/colors';
@@ -15,7 +15,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {CREATE_CONTACT} from '../../../constants/routeNames';
-const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
+const ContactsComponent = ({sortBy, data, loading, setModalVisible}) => {
   const {navigate} = useNavigation();
   const ListEmptyComponent = () => (
     <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
@@ -70,13 +70,6 @@ const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
   return (
     <>
       <View style={{backgroundColor: colors.white}}>
-        <AppModal
-          modalFooter={<></>}
-          modalBody={<></>}
-          title="My Profile"
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
-        />
         {loading && (
           <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
             <ActivityIndicator size="large" color={colors.primary} />
@@ -87,7 +80,26 @@ const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
             <FlatList
               keyExtractor={item => String(item.id)}
               renderItem={renderItem}
-              data={data}
+              data={
+                sortBy
+                  ? data.sort((a, b) => {
+                      if (sortBy === 'First Name') {
+                        if (b.first_name > a.first_name) {
+                          return -1;
+                        } else {
+                          return 1;
+                        }
+                      }
+                      if (sortBy === 'Last Name') {
+                        if (b.last_name > a.last_name) {
+                          return -1;
+                        } else {
+                          return 1;
+                        }
+                      }
+                    })
+                  : data
+              }
               ItemSeparatorComponent={() => (
                 <View style={{height: 0.5, backgroundColor: colors.grey}} />
               )}

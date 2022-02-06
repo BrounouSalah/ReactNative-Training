@@ -2,24 +2,33 @@ import {View, Text, Modal, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import styles from './styles';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import PropTypes from 'prop-types';
 const AppModal = ({
   modalVisible,
   title,
   modalBody,
   modalFooter,
   setModalVisible,
+  closeOnTouchOutside,
 }) => {
   return (
     <Modal visible={modalVisible} transparent>
       <TouchableOpacity
         onPress={() => {
-          setModalVisible(false);
+          if (closeOnTouchOutside) {
+            setModalVisible(false);
+          }
         }}
         style={styles.wrapper}>
         <View style={styles.modalView}>
           <ScrollView>
             <View style={styles.header}>
-              <EvilIcons size={27} name="close" />
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
+                <EvilIcons size={27} name="close" />
+              </TouchableOpacity>
               <Text style={styles.title}>{title || 'Contacts'}</Text>
               <View />
               <View />
@@ -50,6 +59,12 @@ const AppModal = ({
       </TouchableOpacity>
     </Modal>
   );
+};
+AppModal.propTypes = {
+  closeOnTouchOutside: PropTypes.bool,
+};
+AppModal.defaultProps = {
+  closeOnTouchOutside: true,
 };
 
 export default AppModal;

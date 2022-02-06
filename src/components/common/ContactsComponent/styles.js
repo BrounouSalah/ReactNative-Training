@@ -16,6 +16,7 @@ export default StyleSheet.create({
   },
   name: {
     fontSize: 17,
+    paddingLeft: 3,
   },
   phoneNumber: {
     opacity: 0.6,
