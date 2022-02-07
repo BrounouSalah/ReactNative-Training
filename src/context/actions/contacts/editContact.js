@@ -1,10 +1,10 @@
 import {
-  CREATE_CONTACTS_LOADING,
-  CREATE_CONTACTS_SUCCESS,
-  CREATE_CONTACTS_FAIL,
+  EDIT_CONTACTS_LOADING,
+  EDIT_CONTACTS_SUCCESS,
+  EDIT_CONTACTS_FAIL,
 } from '../../../constants/actionTypes/index';
 import axiosInstance from '../../../helpers/axiosInterceptor';
-export default form => dispatch => onSuccess => {
+export default (form, id) => dispatch => onSuccess => {
   const requestPayload = {
     country_code: form.phoneCode || '',
     first_name: form.firstName || '',
@@ -14,20 +14,21 @@ export default form => dispatch => onSuccess => {
     is_favorite: form.isFavorite || false,
   };
   dispatch({
-    type: CREATE_CONTACTS_LOADING,
+    type: EDIT_CONTACTS_LOADING,
   });
   axiosInstance
-    .post('/contacts/', requestPayload)
+    .put(`/contacts/${id}`, requestPayload)
     .then(res => {
       dispatch({
-        type: CREATE_CONTACTS_SUCCESS,
+        type: EDIT_CONTACTS_SUCCESS,
         payload: res.data,
       });
+
       onSuccess(res.data);
     })
     .catch(err => {
       dispatch({
-        type: CREATE_CONTACTS_FAIL,
+        type: EDIT_CONTACTS_FAIL,
         payload: err.response
           ? err.response.data
           : {error: 'Something goes wrong'},

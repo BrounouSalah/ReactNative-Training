@@ -1,13 +1,14 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useState, useContext, useRef, useEffect} from 'react';
-import {CONTACT_LIST} from '../../constants/routeNames';
+import {CONTACT_DETAIL, CONTACT_LIST} from '../../constants/routeNames';
 import CreateContactComponent from '../../components/common/CreateContactComponent';
 import createContact from '../../context/actions/contacts/createContact';
 import {GlobalContext} from '../../context/Provider';
 import uploadImage from '../../helpers/uploadImage';
 import countryCodes from '../../utils/countryCodes';
+import editContact from '../../context/actions/contacts/editContact';
 const CreateContact = () => {
-  const {navigate} = useNavigation();
+  const {navigate, setOptions} = useNavigation();
   const {
     contactsDispatch,
     contactsState: {
@@ -24,6 +25,9 @@ const CreateContact = () => {
   const {params} = useRoute();
   useEffect(() => {
     if (params?.contact) {
+      setOptions({
+        title: 'Update contact',
+      });
       const {
         first_name: firstName,
         last_name: lastName,
@@ -39,6 +43,7 @@ const CreateContact = () => {
           phoneNumber,
           isFavorite,
           countryCode,
+          phoneCode: countryCode,
         };
       });
       const country = countryCodes.find(item => {
@@ -64,18 +69,19 @@ const CreateContact = () => {
         setIsUploading(true);
         uploadImage(localFile)(url => {
           setIsUploading(false);
-          createContact({...form, contactPicture: url})(contactsDispatch)(
-            () => {
-              navigate(CONTACT_LIST);
-            },
-          );
+          editContact(
+            {...form, contactPicture: url},
+            params?.contact.id,
+          )(contactsDispatch)(item => {
+            navigate(CONTACT_DETAIL, {item});
+          });
         })(error => {
           console.log('err', error);
           setIsUploading(false);
         });
       } else {
-        createContact(form)(contactsDispatch)(() => {
-          navigate(CONTACT_LIST);
+        editContact(form, params?.contact.id)(contactsDispatch)(item => {
+          navigate(CONTACT_DETAIL, {item});
         });
       }
     } else {
@@ -84,8 +90,8 @@ const CreateContact = () => {
         uploadImage(localFile)(url => {
           setIsUploading(false);
           createContact({...form, contactPicture: url})(contactsDispatch)(
-            () => {
-              navigate(CONTACT_LIST);
+            item => {
+              navigate(CONTACT_DETAIL, {item});
             },
           );
         })(error => {
@@ -93,8 +99,8 @@ const CreateContact = () => {
           setIsUploading(false);
         });
       } else {
-        createContact(form)(contactsDispatch)(() => {
-          navigate(CONTACT_LIST);
+        createContact(form)(contactsDispatch)(item => {
+          navigate(CONTACT_DETAIL, {item});
         });
       }
     }
